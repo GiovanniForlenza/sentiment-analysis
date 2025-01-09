@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# secret_ignore
+client_ID.txt
+client_secret.txt
+openai.txt

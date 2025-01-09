@@ -1,0 +1,7 @@
+praw
+nltk
+transformers
+vaderSentiment
+langdetect
+pandas
+spacy
