@@ -174,3 +174,4 @@ cython_debug/
 client_ID.txt
 client_secret.txt
 openai.txt
+secret
