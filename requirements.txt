@@ -5,3 +5,5 @@ vaderSentiment
 langdetect
 pandas
 spacy
+openai
+torch
