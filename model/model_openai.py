@@ -6,6 +6,16 @@ import os
 with open("secret/openai.txt", "r") as f:
     openai.api_key = f.read().strip()
 
+def map_emotion_and_sentiment(emotion, sentiment):
+    allowed_emotions = {"gioia", "rabbia", "tristezza", "neutralità"}
+    allowed_sentiments = {"positivo", "negativo", "neutro"}
+
+    if emotion.lower() not in allowed_emotions:
+        emotion = "neutralità"
+    if sentiment.lower() not in allowed_sentiments:
+        sentiment = "neutro"
+    return emotion, sentiment
+
 def parse_response(response_text):
     parsed_results = []
     lines = response_text.strip().split("\n")
@@ -14,6 +24,7 @@ def parse_response(response_text):
             try:
                 emotion = line.split("Emozione:")[1].split(",")[0].strip()
                 sentiment = line.split("Sentimento:")[1].strip()
+                emotion, sentiment = map_emotion_and_sentiment(emotion, sentiment)
                 parsed_results.append((emotion, sentiment))
             except IndexError:
                 parsed_results.append(("Errore", "Errore"))
@@ -22,8 +33,8 @@ def parse_response(response_text):
     return parsed_results
 
 def analyze_comments_with_gpt():
-    input_file = "/workspaces/sentiment-analysis/cleaning_comments/comment_cleaned_final.txt"
-    output_file = "/workspaces/sentiment-analysis/model/results_openai.csv"
+    input_file = "/workspaces/sentiment-analysis/cleaning_comments/cleaned_comments.txt"
+    output_file = "/workspaces/sentiment-analysis/model/results_openai_cleaned_comments.csv"
     
     with open(input_file, "r") as f:
         comments = [line.strip() for line in f.readlines() if line.strip()]
@@ -45,9 +56,10 @@ def analyze_comments_with_gpt():
                         "role": "system",
                         "content": (
                             "Sei un assistente linguistico. Analizza ciascun commento e restituisci:\n"
-                            "1. L'emozione prevalente (es. gioia, rabbia, tristezza, paura, sorpresa, neutralità).\n"
-                            "2. Il sentimento generale (positivo, negativo, neutro).\n"
-                            "Rispondi nel formato: Emozione: [emozione], Sentimento: [sentimento]."
+                            "1. L'emozione prevalente: scegli tra [gioia, rabbia, tristezza].\n"
+                            "2. Il sentimento generale: scegli tra [positivo, negativo, neutro].\n"
+                            "Rispondi nel formato: Emozione: [emozione], Sentimento: [sentimento]. "
+                            "Se non sei sicuro, scegli 'neutro' come sentimento e 'neutralità' come emozione."
                         ),
                     },
                     {
