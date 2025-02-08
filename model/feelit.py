@@ -6,7 +6,7 @@ emotion_classifier = EmotionClassifier()
 sentiment_classifier = SentimentClassifier()
 
 # Read the comments from the file
-with open('/workspaces/sentiment-analysis/cleaning comments/comment_cleaned_final.txt', 'r') as file:
+with open('/workspaces/sentiment-analysis/cleaning_comments/cleaned_comments.txt', 'r') as file:
     comments = file.readlines()
 
 # Open the CSV file and write the header
