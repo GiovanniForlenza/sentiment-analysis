@@ -33,7 +33,7 @@ def plot_analysis(sentiment_counts, emotion_counts, output_file='sentiment_emoti
     plt.show()
 
 # Leggi il file CSV
-data = pd.read_csv('/workspaces/sentiment-analysis/model/result_feelit.csv')
+data = pd.read_csv('/workspaces/sentiment-analysis/result_feelit.csv')
 
 # Analizza i sentimenti e le emozioni
 sentiment_counts, emotion_counts = analyze_sentiments(data)
